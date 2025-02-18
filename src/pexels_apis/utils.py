@@ -75,6 +75,13 @@ def search_filter(params):
         return {"status_code": 412, "status": "error", "error": f"{max_duration}"}
     elif max_duration < 1:
        return {"status_code": 412, "status": "error", "error": f"{max_duration_error}"}
+
+    duration = params.get("max_duration") or 1
+    duration_error = "duration must be an integrer greater than 0"
+    if not isinstance(duration, int):
+        return {"status_code": 412, "status": "error", "error": f"{duration}"}
+    elif duration < 1:
+       return {"status_code": 412, "status": "error", "error": f"{duration_error}"}
     
     _type = params.get('type') or ""
     _types = ["photo", "video", ""]
